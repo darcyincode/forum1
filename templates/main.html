@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Index{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<h1>欢迎来到论坛</h1>
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-whatever="@mdo"
+    data-bs-target="#modal1" ">发布新的帖子</button>
+
+    <div class=" modal fade" id="modal1" tabindex="-1" aria-labelledby="modal1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">发布新的帖子</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" id="submit-form">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="recipient-name" id = "title" class="col-form-label">帖子title</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text"id = "content"  class="col-form-label">帖子内容</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">发布帖子</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    </div>
+    <div>
+        <ul class="list-group list-group-flush">
+            {% for message in data %}
+            <li class="list-group-item">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                      <h5 class="card-title">{{message.title}}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">发帖人: {{message.poster}}</h6>
+                      <p class="card-text">{{message.content}}</p>
+                    </div>
+                </div> 
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+    
+    {% endblock %}
+    {% block scripts %}
+    {{ bootstrap.load_js() }}
+    <script>
+        var exampleModal = document.getElementById('modal1')
+
+        exampleModal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            var recipient = button.getAttribute('data-bs-whatever')
+            // If necessary, you could initiate an AJAX request here
+            // and then do the updating in a callback.
+            //
+            // Update the modal's content.
+            // var modalTitle = exampleModal.querySelector('.modal-title')
+        })
+        var form = document.getElementById('submit-form')
+
+        form.addEventListener('submit', logSubmit);
+        function logSubmit(event) {
+            var title = form.querySelector('#recipient-name').value
+            var content = form.querySelector('#message-text').value
+
+            event.preventDefault()
+            var data =  {
+                    'title':title,
+                    'content':content
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/post',
+                contentType : 'application/json',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function (data) {
+                    alert("success")
+                },
+                error: function (xhr, type) {
+                }
+            });    
+        }    
+    </script>
+    {% endblock %}

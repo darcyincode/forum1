@@ -1,0 +1,48 @@
+
+/* General styles */
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    background-color: #f8f9fa;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  
+  /* Button styles */
+  .btn-outline-primary {
+    border-color: #007bff;
+    color: #007bff;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  /* Card styles */
+  .card {
+    margin-bottom: 20px;
+  }
+  
+  .card-title {
+    font-weight: 600;
+  }
+  
+  .card-subtitle {
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
+  
+  .card-text {
+    font-weight: 400;
+    margin-bottom: 0;
+  }
+  
